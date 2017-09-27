@@ -5,17 +5,20 @@ import json
 import sys
 import requests
 from bs4 import BeautifulSoup
+import re
 
 def getPinyin(input):
     p = Pinyin()
-    # jieba.set_dictionary('dict.txt.big')
     txt = jieba.cut(input)
     out = []
+    # print(len(list(txt)))
     for t in txt:
-        print(t)
-        # out.append({str(t):p.get_pinyin(str(t))})
-        # print(p.get_pinyin(str(t)))
-    # print(json.dumps(out))
+        pinyin = p.get_pinyin(str(t))
+        obj = {'txt':t, 'pinyin':pinyin} #dict
+        out.append(json.dumps(obj, ensure_ascii=False))
+    print(json.dumps(out, ensure_ascii=False, sort_keys=True))
+
+
 
 lyricUrl = 'https://mojim.com'
 hotSongUrl = 'https://mojim.com/twzhot-song.htm'
@@ -35,9 +38,15 @@ def crawLyric(urls):
     html = requests.get(lyricUrl+url).text
     soup = BeautifulSoup(html, 'html.parser')
     lyric = soup.select("dd.fsZx3")[0].get_text() #只有一個
+    lyric = re.sub(r'(\[.{6,8}\])|\W|(更多更詳盡歌詞 在 ※ Mojim.com　魔鏡歌詞網)', '', lyric)
+    # lyric = re.split(r'')
+    print(lyric)
+    # for l in lyric:
+    #     print(l)
+
     getPinyin(lyric)
 
 if __name__ == '__main__':
-    # getPinyin(sys.argv[1])
-    urls = getSongUrl()
-    crawLyric(urls)
+    getPinyin(sys.argv[1])
+    # urls = getSongUrl()
+    # crawLyric(urls)
