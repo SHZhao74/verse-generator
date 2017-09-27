@@ -13,10 +13,13 @@ def getPinyin(input):
     out = []
     # print(len(list(txt)))
     for t in txt:
+        if (len(t) <= 1): continue
         pinyin = p.get_pinyin(str(t))
         obj = {'txt':t, 'pinyin':pinyin} #dict
-        out.append(json.dumps(obj, ensure_ascii=False))
-    print(json.dumps(out, ensure_ascii=False, sort_keys=True))
+        out.append(obj)
+
+    with open('data.json', 'w') as pinyinData:
+        json.dump(out,pinyinData, ensure_ascii=False, indent=4)
 
 
 
