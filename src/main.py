@@ -15,11 +15,12 @@ def getPinyin(input):
     for t in txt:
         if (len(t) <= 1): continue
         pinyin = p.get_pinyin(str(t))
+        print(pinyin)
         obj = {'txt':t, 'pinyin':pinyin} #dict
         out.append(obj)
 
     with open('data.json', 'w') as pinyinData:
-        json.dump(out,pinyinData, ensure_ascii=False, indent=4)
+        print (json.dump(out,pinyinData, ensure_ascii=False, indent=4))
 
 
 
@@ -41,7 +42,7 @@ def crawLyric(urls):
     html = requests.get(lyricUrl+url).text
     soup = BeautifulSoup(html, 'html.parser')
     lyric = soup.select("dd.fsZx3")[0].get_text() #只有一個
-    lyric = re.sub(r'(\[.{6,8}\])|\W|(更多更詳盡歌詞 在 ※ Mojim.com　魔鏡歌詞網)', '', lyric)
+    lyric = re.sub(r'(\[.{6,8}\])|\W|(更多更詳盡歌詞 在 ※ Mojim.com　魔鏡歌詞網)|的', ' ', lyric)
     # lyric = re.split(r'')
     print(lyric)
     # for l in lyric:
