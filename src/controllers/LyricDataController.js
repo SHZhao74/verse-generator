@@ -1,9 +1,14 @@
 import mongoose from 'mongoose'
 import querystring from 'querystring'
-const Lyric = mongoose.model('Lyrics')
+import RhymeModel from '../models/RhymeModel'
+import LyricModel from '../models/LyricModel'
 
 //針對不同request的回應(json格式)
-
+exports.searchRhyme = (req, res) => {
+  RhymeModel.find({}, (err, rhyme) => {
+    res.send(rhyme)
+  })
+}
 exports.list_all_lyrics = function(req, res) {
     Lyric.find({}, function(err, lyric) {
         if (err)
@@ -14,7 +19,7 @@ exports.list_all_lyrics = function(req, res) {
 
 //CRUD
 
-exports.create_a_lyric = function(req, res) {
+exports.addWord = function(req, res) {
     var new_lyric = new Lyric(req.query);
 		console.error(req.query)
     new_lyric.save(function(err, lyric) {

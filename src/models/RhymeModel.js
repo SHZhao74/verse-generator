@@ -1,14 +1,11 @@
 import mongoose from 'mongoose'
-import LyricSchema from './LyricSchema'
-
+import { LyricSchema } from './LyricModel'
+// const Lyric = new mongoose.scham(LyricSchema)
 const RhymeSchema = new mongoose.Schema({
  rhyme:{
-   type: [String]
+   type: String
  },
- lyrics: [LyricSchema]
+ words: [LyricSchema]
 })
 
-RhymeSchema.method.addLyric = (lyric) {
-  console.log("This data is:", lyric);
-}
-export default mongoose.model('Rhyme', LyricSchema)
+export default mongoose.model('Rhyme', RhymeSchema)

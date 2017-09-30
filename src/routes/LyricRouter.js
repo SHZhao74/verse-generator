@@ -3,9 +3,12 @@ module.exports = function(app) {
 
 
     // todoList Routes
+    app.route('/search')
+      .get(todoList.searchRhyme)
+      
     app.route('/word')
         .get(todoList.list_all_lyrics)
-        .post(todoList.create_a_lyric);
+        .post(todoList.addWord);
 
 
     app.route('/word/:lyricId')
