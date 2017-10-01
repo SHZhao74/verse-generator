@@ -81,9 +81,9 @@ def crawLyric(urls):
         getPinyin(getWords(lyric), i)
 
 if __name__ == '__main__':
-    # words = getWords(sys.argv[1].encode('utf-8'))
-    # getPinyin(words,0)
-    print('get urls')
-    urls = getSongUrl()
-    print('crawl Lyric')
-    crawLyric(urls)
+    words = getWords(sys.argv[1].encode('utf-8'))
+    getPinyin(words,0)
+    # print('get urls')
+    # urls = getSongUrl()
+    # print('crawl Lyric')
+    # crawLyric(urls)

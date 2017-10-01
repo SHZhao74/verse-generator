@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 export const LyricSchema = new mongoose.Schema({
 	word: String,
-	pinyin: String
+	// pinyin: String
 });
 
 // export LyricSchema
