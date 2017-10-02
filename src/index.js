@@ -4,7 +4,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 80
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017');
 

@@ -6,7 +6,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 import re
-
+import subprocess
 
 
 # class Rhyme
@@ -38,13 +38,15 @@ def getPinyin(words, num):
     # print(len(list(txt)))
     for  t in words:
         if (len(t) <= 1): continue
-        pinyin = p.get_pinyin(str(t)).split('-')
-        rhyme = pairRhyme(pinyin)
-        out.append({'word':str(t), 'rhyme':rhyme})
-    wordCnt += len(words)
+        # pinyin = p.get_pinyin(str(t)).split('-')
+        # rhyme = pairRhyme(pinyin)
+        # out.append({'word':str(t), 'rhyme':rhyme})
+        # SaveToMongoDB(str({'word':str(t), 'rhyme':rhyme}))
+        requests.post('http://localhost/add?word='+t)
+    # wordCnt += len(words)
     # print('字數:', wordCnt)
-    with open('src/data/song'+str(num)+'.json', 'w') as pinyinData:
-        json.dump(out, pinyinData, ensure_ascii=False) #, indent=4
+    # with open('data/song'+str(num)+'.json', 'w') as pinyinData:
+    #     json.dump(out, pinyinData, ensure_ascii=False) #, indent=4
     # print(json.dumps(out, ensure_ascii=False))
 
 
@@ -80,9 +82,11 @@ def crawLyric(urls):
         getPinyin(getWords(lyric), i)
 
 if __name__ == '__main__':
-    words = getWords(sys.argv[1].encode('utf-8'))
-    getPinyin(words,0)
-    # print('get urls')
-    # urls = getSongUrl()
-    # print('crawl Lyric')
-    # crawLyric(urls)
+    if len(sys.argv) > 1:
+        words = getWords(sys.argv[1].encode('utf-8'))
+        getPinyin(words,0)
+    else:
+        print('get urls')
+        urls = getSongUrl()
+        print('crawl Lyric')
+        crawLyric(urls)

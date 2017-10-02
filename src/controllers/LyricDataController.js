@@ -21,8 +21,7 @@ exports.searchRhyme = (req, res) => {
       res.send(result)
     }
     else { //不存在，則尋找相同韻腳
-      const pinyin = Pinyin(req.query.word, {style: Pinyin.STYLE_NORMAL})
-      const rhyme = pairRhyme(pinyin)
+      const rhyme = getRhyme(word)
       // console.log(rhyme);
       RhymeModel.findOne(rhyme, (err, result) => {
         if (err) return console.error(err);
@@ -40,6 +39,10 @@ exports.searchRhyme = (req, res) => {
   //   // res.send(result)
   // })
 }
+const getRhyme = (word) => {
+  const pinyin = Pinyin(word, {style: Pinyin.STYLE_NORMAL})
+  return pairRhyme(pinyin)
+}
 exports.list_all_lyrics = function(req, res) {
     Lyric.find({}, function(err, lyric) {
         if (err)
@@ -49,15 +52,38 @@ exports.list_all_lyrics = function(req, res) {
 };
 
 //CRUD
-
+const pushNewWord = (newWord, rhyme) => {
+  RhymeModel.update(rhyme, { $push: { words: newWord } }, (err, result) => {
+    if(err) return console.error(err)
+    console.log('new word:', newWord)
+  })
+}
 exports.addWord = function(req, res) {
-    var new_lyric = new Lyric(req.query);
-		console.error(req.query)
-    new_lyric.save(function(err, lyric) {
-        if (err)
-            res.send(err);
-        res.json(lyric);
-    });
+  const {word} = req.query;
+  const rhyme = getRhyme(word);
+  const new_lyric = new LyricModel({word: word});
+  const new_rhyme = new RhymeModel({rhyme:rhyme, words:new_lyric})
+  // 先找這組詞彙是否已經存在
+  new_rhyme.isWordExist(word, (err, result) => {
+    if (err) return console.error(err);
+    console.log('word findOne result:', result)
+    if (result === null) { //不存在 則檢查是否有此組韻腳
+      // RhymeModel.findOne(rhyme, (err, result) =>{
+      //   if (err) return console.error(err);
+      //   // console.log('Rhyme findOne result:', result)
+      //   if (result === null) { //此組韻腳不存在，新增一個
+      //
+      //     new_rhyme.save((err, rhy) => {
+      //       if (err) return console.log(err);
+      //       console.log('new Rhyme:', rhyme);
+      //       res.send(rhyme)
+      //     })
+      //   }else
+      //   pushNewWord(new_lyric, rhyme)
+      //   res.send(new_lyric)
+      // })
+    }else res.send('Wrod Duplicate') //詞彙已存在
+  })
 };
 
 exports.read_a_lyric = function(req, res) {

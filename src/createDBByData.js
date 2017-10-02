@@ -29,7 +29,7 @@ const addWord = function(lyric) {
     if (result === null) { //不存在 則檢查是否有此組運腳
       RhymeModel.findOne({rhyme}, (err, result) =>{
         if (err) return console.error(err);
-        console.log('Rhyme findOne result:', result)
+        // console.log('Rhyme findOne result:', result)
         if (result === null) { //此組運繳不存在，新增一個
           const new_rhyme = new RhymeModel({rhyme: rhyme, words:new_lyric})
           new_rhyme.save((err, rhy) => {
@@ -48,17 +48,22 @@ const getJSON = (files) => {
     // console.log(files[f]);
     fs.readFile(`${BASE_PATH}${files[f]}`,async (err, data) => {
       const words = JSON.parse(iconv.decode(data, 'big5'))
+      console.log(words);
       for (var i in words) {
         // console.log(words[i]);
-        setTimeout(tmp(words[i]), i*1000)
+        setTimeout(tmp(words[i]), i*10)
       }
     })
   }
 }
 
-fs.readdir(BASE_PATH, (err, files) => {
-  if(err) throw err;
-  console.log(files);
-  getJSON(files)
+// fs.readdir(BASE_PATH, (err, files) => {
+//   if(err) throw err;
+//   console.log(files);
+//   getJSON(files)
+//
+// })
 
+process.argv.forEach((val, index, array) =>{
+  console.log('val:', val,'index:', index, 'array:',array);
 })

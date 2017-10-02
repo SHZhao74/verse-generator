@@ -6,13 +6,13 @@ module.exports = function(app) {
     app.route('/search')
       .get(todoList.searchRhyme)
 
-    app.route('/word')
-        .get(todoList.searchRhyme)
+    app.route('/add')
+    //     .get(todoList.searchRhyme)
         .post(todoList.addWord);
 
 
-    app.route('/word/:lyricId')
-        .get(todoList.read_a_lyric)
-        .put(todoList.update_a_lyric)
-        .delete(todoList.delete_a_lyric);
+    // app.route('/word/:lyricId')
+    //     .get(todoList.read_a_lyric)
+    //     .put(todoList.update_a_lyric)
+    //     .delete(todoList.delete_a_lyric);
 };

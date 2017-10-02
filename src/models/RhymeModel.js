@@ -7,5 +7,10 @@ const RhymeSchema = new mongoose.Schema({
  },
  words: [LyricSchema]
 })
+RhymeSchema.methods.findSameRhyme = (cb) => this.model('Rhyme').findOne({rhyme: this.rhyme}, cb)
+
+RhymeSchema.methods.isWordExist = (word, cb) =>
+  this.model('Rhyme').findOne({words: { $elemMatch: {word}}}, cb)
+
 
 export default mongoose.model('Rhyme', RhymeSchema)

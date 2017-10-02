@@ -53,6 +53,6 @@ const pairRhyme = (pin) => {
   // print(r, len(r), len(pin))
   if(r.length == pin.length)
       // print( '-'.join(r))
-      return {rhyme: r.join('-')}
+      return r.join('-')
 }
 export default pairRhyme;
