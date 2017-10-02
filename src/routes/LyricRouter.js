@@ -5,9 +5,9 @@ module.exports = function(app) {
     // todoList Routes
     app.route('/search')
       .get(todoList.searchRhyme)
-      
+
     app.route('/word')
-        .get(todoList.list_all_lyrics)
+        .get(todoList.searchRhyme)
         .post(todoList.addWord);
 
 

@@ -13,35 +13,33 @@ mongoose.connect('mongodb://localhost:27017');
 const pushNewWord = (newWord, rhyme) => {
   RhymeModel.update(rhyme, { $push: { words: newWord } }, (err, result) => {
     if(err) return console.error(err)
-    console.log('update result:', result)
+    console.log('new word:', newWord)
   })
 }
 const addWord = function(lyric) {
   console.log(lyric)
   const {word, rhyme} = lyric
-  // 先找這組韻腳是否已經存在
-  RhymeModel.findOne({rhyme}, (err, result) => {
+  // 先找這組詞彙是否已經存在
+  RhymeModel.findOne({words: {
+    $elemMatch: {word:word}
+  }}, (err, result) => {
     if (err) return console.error(err);
-    console.log('findOne result:', result)
+    console.log('word findOne result:', result)
     const new_lyric = new LyricModel({word: word});
-    if (result === null) { //不存在 則新增一組韻腳
-      const new_rhyme = new RhymeModel({rhyme: rhyme, words:new_lyric})
-      new_rhyme.save((err, rhy) => {
-        if (err) return handleError(err);
-        console.log('save result:', rhy);
-      })
-    }
-    else { //存在，則檢查這個詞彙是否已存在
-      RhymeModel.findOne({words: {
-        $elemMatch: {word:word}
-      }}, (err, result) =>{
+    if (result === null) { //不存在 則檢查是否有此組運腳
+      RhymeModel.findOne({rhyme}, (err, result) =>{
         if (err) return console.error(err);
-        console.log('word findOne result:', result)
-        if (result === null) {
-          pushNewWord(new_lyric, rhyme)
-        }else console.log('Wrod Duplicate')
+        console.log('Rhyme findOne result:', result)
+        if (result === null) { //此組運繳不存在，新增一個
+          const new_rhyme = new RhymeModel({rhyme: rhyme, words:new_lyric})
+          new_rhyme.save((err, rhy) => {
+            if (err) return handleError(err);
+            console.log('new Rhyme:', rhyme);
+          })
+        }else
+        pushNewWord(new_lyric, rhyme)
       })
-    }
+    }else console.log('Wrod Duplicate')
   })
 };
 const tmp = (word)=>()=>addWord(word)

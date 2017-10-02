@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/SHZhao74/Verse-Generator.git"
   },
-  "author": "",
+  "author": "SHZhao74",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SHZhao74/Verse-Generator/issues"
@@ -23,11 +23,12 @@
     "express": "^4.15.5",
     "mongoose": "^4.11.13",
     "nodemon": "^1.12.1",
+    "pinyin": "^2.8.3",
     "python-shell": "^0.4.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-syntax-async-functions": "^6.13.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.0"
   }
 }

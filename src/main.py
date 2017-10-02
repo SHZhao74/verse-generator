@@ -40,13 +40,12 @@ def getPinyin(words, num):
         if (len(t) <= 1): continue
         pinyin = p.get_pinyin(str(t)).split('-')
         rhyme = pairRhyme(pinyin)
-        # print('word:', t, 'pinyin:', pinyin, 'rhyme:', rhyme)
-        # print(pinyin)
         out.append({'word':str(t), 'rhyme':rhyme})
     wordCnt += len(words)
-    print('字數:', wordCnt)
-    with open('data/song'+str(num)+'.json', 'w') as pinyinData:
-        json.dump(out, pinyinData, ensure_ascii=False, indent=4)
+    # print('字數:', wordCnt)
+    with open('src/data/song'+str(num)+'.json', 'w') as pinyinData:
+        json.dump(out, pinyinData, ensure_ascii=False) #, indent=4
+    # print(json.dumps(out, ensure_ascii=False))
 
 
 
@@ -64,7 +63,7 @@ def getSongUrl():
     return urls
 def crawLyric(urls):
     # url = urls[0]
-    for i, url in enumerate(urls[0:3]):
+    for i, url in enumerate(urls):
         # if i>3: break
         html = requests.get(lyricUrl+url).text
         soup = BeautifulSoup(html, 'html.parser')
