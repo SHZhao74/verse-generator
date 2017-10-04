@@ -11,24 +11,12 @@ import pairRhyme from '../RhymeTable'
 //針對不同request的回應(json格式)
 exports.searchRhyme = (req, res) => {
   // const query = JSON.stringfy(req.query)
-  const {word} = req.query;
-  RhymeModel.find({words: { //先找這個詞彙是否已經存在
-    $elemMatch: {word:word}
-  }}, (err, result) => {
+  const rhyme = getRhyme(req.queryword)
+  // console.log(rhyme);
+  RhymeModel.findOne(rhyme, (err, result) => {
     if (err) return console.error(err);
-    console.log(result);
-    if (result.length){
-      res.send(result)
-    }
-    else { //不存在，則尋找相同韻腳
-      const rhyme = getRhyme(word)
-      // console.log(rhyme);
-      RhymeModel.findOne(rhyme, (err, result) => {
-        if (err) return console.error(err);
-        if (result) res.send(result)
-        else res.send([])
-      })
-    }
+    if (result) res.send(result)
+    else res.send([])
   })
   // pyshell.run('src/main.py', {args:[req.query.word]}, (err, result) => {
   //   if(err)console.error(err);

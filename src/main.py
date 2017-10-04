@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import subprocess
-
+from langconv import *
 
 # class Rhyme
 def getWords(lyric):
@@ -80,13 +80,26 @@ def crawLyric(urls):
     #     print(l)
 
         getPinyin(getWords(lyric), i)
-
+import time
+def readRhymeFile():
+    with open('data/rhymewords-2.txt', encoding='utf-8') as words:
+        lines = words.readlines()
+        for l in lines:
+            l = re.sub(r'[0-9]', '', l)
+            ws = re.findall(r"\w\w", l.split('词汇:')[1])
+            for w in ws:
+                w =  Converter('zh-hant').convert(w)
+                requests.post('http://localhost/add?word='+w)
+                time.sleep(1)
+        # lines = [x.split('词汇:')[1]]
+        # json.dump(out, pinyinData, ensure_ascii=False)
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         words = getWords(sys.argv[1].encode('utf-8'))
         getPinyin(words,0)
     else:
-        print('get urls')
-        urls = getSongUrl()
-        print('crawl Lyric')
-        crawLyric(urls)
+        readRhymeFile()
+        # print('get urls')
+        # urls = getSongUrl()
+        # print('crawl Lyric')
+        # crawLyric(urls)
