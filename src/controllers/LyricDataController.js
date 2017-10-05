@@ -32,7 +32,7 @@ const getRhyme = (word) => {
   return pairRhyme(pinyin)
 }
 exports.list_all_lyrics = function(req, res) {
-    Lyric.find({}, function(err, lyric) {
+    RhymeModel.find({}, function(err, lyric) {
         if (err)
             res.send(err);
         res.json(lyric);
@@ -41,10 +41,7 @@ exports.list_all_lyrics = function(req, res) {
 
 //CRUD
 const pushNewWord = (newWord, rhyme) => {
-  RhymeModel.update(rhyme, { $push: { words: newWord } }, (err, result) => {
-    if(err) return console.error(err)
-    console.log('new word:', newWord)
-  })
+
 }
 exports.addWord = function(req, res) {
   const {word} = req.query;
@@ -52,25 +49,29 @@ exports.addWord = function(req, res) {
   const new_lyric = new LyricModel({word: word});
   const new_rhyme = new RhymeModel({rhyme:rhyme, words:new_lyric})
   // 先找這組詞彙是否已經存在
+  console.log(word);
   new_rhyme.isWordExist(word, (err, result) => {
     if (err) return console.error(err);
-    console.log('word findOne result:', result)
-    if (result === null) { //不存在 則檢查是否有此組韻腳
-      // RhymeModel.findOne(rhyme, (err, result) =>{
-      //   if (err) return console.error(err);
-      //   // console.log('Rhyme findOne result:', result)
-      //   if (result === null) { //此組韻腳不存在，新增一個
-      //
-      //     new_rhyme.save((err, rhy) => {
-      //       if (err) return console.log(err);
-      //       console.log('new Rhyme:', rhyme);
-      //       res.send(rhyme)
-      //     })
-      //   }else
-      //   pushNewWord(new_lyric, rhyme)
-      //   res.send(new_lyric)
-      // })
-    }else res.send('Wrod Duplicate') //詞彙已存在
+    console.log('word findOne result:', result? result.rhyme : 'null')
+    if (result !== null) res.send('Wrod Duplicate') //詞彙已存在
+    else { //不存在 則檢查是否有此組韻腳
+      RhymeModel.findOne({rhyme}, (err, result) =>{
+        if (err) return console.error(err);
+        console.log('Rhyme findOne result:', result? result.rhyme : 'null')
+        if (result === null) { //此組韻腳不存在，新增一個
+          new_rhyme.save((err, rhy) => {
+            if (err) return console.log(err);
+            console.log('new Rhyme:', rhyme);
+            return res.send(rhyme)
+          })
+        }
+        else {
+          // pushNewWord(new_lyric, rhyme)
+          result.addWord(new_lyric, (err, qqq)=>{if(err)return console.error(err); console.log(qqq);})
+          res.send(new_lyric)
+        }
+      })
+    }
   })
 };
 

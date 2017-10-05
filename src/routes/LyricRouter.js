@@ -7,7 +7,7 @@ module.exports = function(app) {
       .get(todoList.searchRhyme)
 
     app.route('/add')
-    //     .get(todoList.searchRhyme)
+        .get(todoList.list_all_lyrics)
         .post(todoList.addWord);
 
 
