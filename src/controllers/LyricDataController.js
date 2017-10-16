@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import querystring from 'querystring'
 import pyshell from 'python-shell'
 import Pinyin from 'pinyin'
-// import iconv from 'iconv-lite'
+import iconv from 'iconv-lite'
 // import fs from 'fs'
 import RhymeModel from '../models/RhymeModel'
 import LyricModel from '../models/LyricModel'
@@ -10,10 +10,12 @@ import pairRhyme from '../RhymeTable'
 
 //針對不同request的回應(json格式)
 exports.searchRhyme = (req, res) => {
-  // const query = JSON.stringfy(req.query)
-  const rhyme = getRhyme(req.queryword)
+  const word = req.query.word
+  // const word = iconv.decode(req.query.word, 'big5')
+  console.log(word);
+  const rhyme = getRhyme(word)
   // console.log(rhyme);
-  RhymeModel.findOne(rhyme, (err, result) => {
+  RhymeModel.findOne({rhyme}, (err, result) => {
     if (err) return console.error(err);
     if (result) res.send(result)
     else res.send([])

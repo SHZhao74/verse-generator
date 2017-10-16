@@ -90,7 +90,7 @@ def readRhymeFile():
             for w in ws:
                 w =  Converter('zh-hant').convert(w)
                 requests.post('http://localhost/add?word='+w)
-                time.sleep(1)
+                time.sleep(0.5)
         # lines = [x.split('词汇:')[1]]
         # json.dump(out, pinyinData, ensure_ascii=False)
 if __name__ == '__main__':
