@@ -5,13 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch src --exec babel-node src/index.js",
+    "start": "nodemon index.js",
     "createDB": "nodemon --watch src --exec babel-node src/createDBByData.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SHZhao74/Verse-Generator.git"
-  },
+  "repository": "git+https://github.com/SHZhao74/Verse-Generator.git",
   "author": "SHZhao74",
   "license": "ISC",
   "bugs": {
@@ -19,16 +16,12 @@
   },
   "homepage": "https://github.com/SHZhao74/Verse-Generator#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.15.5",
-    "mongoose": "^4.11.13",
+    "js-levenshtein": "^1.1.6",
+    "nodejieba": "^2.3.1",
     "nodemon": "^1.12.1",
-    "pinyin": "^2.8.3",
+    "pinyin": "^2.9.0",
     "python-shell": "^0.4.0"
   },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-syntax-async-functions": "^6.13.0",
-    "babel-preset-env": "^1.6.0"
-  }
+  "devDependencies": {},
+  "private": true
 }

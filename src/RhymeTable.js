@@ -55,4 +55,6 @@ const pairRhyme = (pin) => {
       // print( '-'.join(r))
       return r.join('-')
 }
-export default pairRhyme;
+module.exports = {
+  RhymeTable,
+RhymeDct}
