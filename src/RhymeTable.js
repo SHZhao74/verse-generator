@@ -17,44 +17,51 @@ const RhymeTable = [
   {chinese: ['絕', '學'], rhyme:['üe']},
 ]
 const RhymeDct = {
-    'a': '1', 'ua': '1', 'ia': '1',
-    'ue': '16',
-    'ai': '2', 'uai': '2',
-    'uan': '3', 'ian':'3', 'an': '3',
+    'a': '1', 'ua': '1', 'ia': '1',// ㄚ ㄧㄚ ㄨㄚ
+    'ai': '2', 'uai': '2', // ㄞ ㄨㄞ
+    'uan': '3', 'an': '3', //ㄨㄢ ㄢ
     'uang': '4', 'ang': '4', 'iang': '4',
     'ao': '5', 'iao': '5',
-    'uo': '13', 'e': '6',
-    'ui': '7', 'ei': '7',
-    'en':'8', 'in': '8', 'un': '8',
-    'ing': '9', 'eng': '9', 'ong': '9', 'iong': '9',
-    'er': '10',
-    'i': '11',
-    'ye': '12','ie': '12',
-    'iu': '13', 'ou': '13', 'o': '13',
-    'u': '14',
+    'e': '6',
+    
+  'ui': '7',
+  'ei': '7', //沒
+    'ue': '7', //ㄩㄝ 絕學
+  // 'wei': '7',  
+
+  'en': '8', 'un': '8',
+  'eng': '8', //ㄔㄥ, ㄓㄥ
+  //'wen':'8', //ㄨㄣ
+
+  'in': '9', //ㄧㄣ 
+  'ing': '9', //ㄧㄥ
+  'iong': '9',
+
+  'er': '10',
+    
+  'i': '11', //ㄐㄧ
+  'yi': '11', //氣力, 益
+  
+  'ye': '12',
+  'ie': '12', //ㄧㄝ
+  'ian': '12', //ㄧㄢ
+    
+  'iu': '13', //修 揪
+  'ou': '13', 'o': '13',
+  'uo': '13',//鄒
+  'you': '13', 'wo': '13', //優 窩
+  'ong': '13', //空衝
+
+    'u': '14', 'wu': '14',
     'qu': '15', 'xu': '15', 'yu': '15', 'ju': '15',
-    'shi':'16', 'zi': '16', 'zhi': '16', 'ci': '16', 'ri': '16' //知吃虱ㄖ資ㄘㄙ
+  'zhi': '16', 'chi': '16', 'shi': '16', 'ri': '16', //至赤是日
+  'zi': '16', 'ci': '16', 'si':'16', //自次四
 }
-const pairRhyme = (pin) => {
-  const r = []
-  for (let i in pin){
-    let p = pin[i][0]
-    while(true){
-      // console.log(p);
-      if (p.length === 0)break
-      const token = RhymeDct[p]
-      if(token){
-        r.push(token)
-        break
-      }
-      p = p.slice(1, p.length)
-    }
-  }
-  // print(r, len(r), len(pin))
-  if(r.length == pin.length)
-      // print( '-'.join(r))
-      return r.join('-')
-}
+/**
+ * 在同音調時有押韻:
+ * in(9)跟i(11) 金 雞
+ * ie(ㄧㄝ)跟ian(ㄧㄢ) 鞋帶 年代 厭世 夜市
+ */
 module.exports = {
   RhymeTable,
 RhymeDct}

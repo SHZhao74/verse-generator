@@ -1,0 +1,23 @@
+
+table.table
+    thead
+        tr(style="font-weight: 700")
+            //- if result.length
+            //-     each value, key in result[0]
+            //-             td=key
+            //- else
+            //-     h2 NO Result
+            each h in ['詞彙', '子音', '拼音', '聲調','韻母', '韻母歸類']
+                td=h 
+
+    tbody
+        tr(style="font-weight: 550").bg-light
+            each value in word
+                td=value
+        each r in result
+            tr
+                each value, key in ['word', 'consonant', "pinyin", 'tone', 'vowel','vowelType']
+                    td=r[value]
+        else
+            h3 No Result
+            

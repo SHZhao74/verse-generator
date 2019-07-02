@@ -1,0 +1,31 @@
+//-所有頁面的殼
+doctype html
+html(lang="zh-Hant-TW")
+  head
+    title 尬押
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    block meta
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", crossorigin="anonymous")
+    block css
+      link(rel='stylesheet', href='/css/style.default.css')
+      link(rel='stylesheet', href='/css/my.style.css')
+  body
+    header.header
+        nav.navbar.navbar-dark.bg-dark
+          .container-fluid
+            .navbar-holder.d-flex.align-items-center.justify-content-between
+              .navbar-header
+                a.navbar-brand(href=`/`)
+                  .brand-text.d-none.d-md-inline-block 
+                    strong 尬押
+
+              //- ul.nav-menu.list-unstyled.d-flex.flex-md-row.align-items-md-center
+              //-   li.nav-item
+              //-     a.nav-link(href=`/lottery/${orgId}` target="_blank")
+              //-         |預覽網站 
+              //-         i.far.fa-eye
+    block content
+
+    block footer
+    block script
+      script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')

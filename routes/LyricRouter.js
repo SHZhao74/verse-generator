@@ -1,18 +1,33 @@
-module.exports = function(app) {
-    var todoList = require('../controllers/LyricDataController');
+const express = require('express');
+const Util = require('../src/utli');
+const Router = express.Router();
 
+Router.get('/', async (req, res) => {
+  try {
+    const WordCnt = await Util.getWordCnt();
+    res.render('index', { WordCnt})
+  } catch (e) {
+    console.error(e)
+  }
+})
+Router.get('/api/search', async (req, res) => {
+  const { txt } = req.query;
+  try {
+    const { word, result } = await Util.searchRhyme(txt);
+    res.render('ryhmeResult', { word, result });
+    // await Util.addWordsToDB(txt);
+    // console.log({ word, result })
+  } catch (e) {
+    res.status(400).send(e)
+    console.error(e)
+  }
+})
+module.exports = Router;
 
-    // todoList Routes
-    app.route('/search')
-      .get(todoList.searchRhyme)
-
-    app.route('/add')
-        .get(todoList.list_all_lyrics)
-        .post(todoList.addWord);
-
-
-    // app.route('/word/:lyricId')
-    //     .get(todoList.read_a_lyric)
-    //     .put(todoList.update_a_lyric)
-    //     .delete(todoList.delete_a_lyric);
-};
+(async () => {
+    // let r1 = await Util.addWordsToDB(sentence);
+    // await Util.rebuildDataBase();
+    // console.log('DONE', {r2})
+})().catch(e => {
+    console.error(e)
+});
