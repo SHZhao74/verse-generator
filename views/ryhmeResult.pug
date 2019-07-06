@@ -11,13 +11,15 @@ table.table
                 td=h 
 
     tbody
-        tr(style="font-weight: 550").bg-light
-            each value in word
-                td=value
-        each r in result
-            tr
-                each value, key in ['word', 'consonant', "pinyin", 'tone', 'vowel','vowelType']
-                    td=r[value]
-        else
-            h3 No Result
+        if word
+            tr(style="font-weight: 550").bg-light
+                each value in word
+                    td=value
+        if result
+            each r in result
+                tr
+                    each value, key in ['word', 'consonant', "pinyin", 'tone', 'vowel','vowelType']
+                        td=r[value]
+            else
+                h3 No Result
             

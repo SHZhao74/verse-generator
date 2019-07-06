@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    //- section.section-padding
+    //-     .container
+    //-         h1.center  尬押
+    section.section-padding
+        .container
+            .input-group
+                input( type="text" class="form-control" placeholder="韻腳" aria-label="Username" aria-describedby="basic-addon1")#txt
+                .input-group-append
+                    input(type="button", value="加一下")#search.btn.btn-primary
+    section.section-padding
+        .container
+            #result
+
+block append script
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js")
+    //- script(src="/static/index.js")
+
+    script(src='/js/addWord.js')
+        

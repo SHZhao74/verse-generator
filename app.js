@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // import Lyric from './models/LyricModel'
 const express = require('express')
-// import bodyParser from 'body-parser'
+const bodyParser = require("body-parser");
 const logger = require('morgan');
 const path = require('path');
 
@@ -41,13 +41,13 @@ if (app.get('env') === 'production') {
     // }));
     app.use(logger('dev'));
 }
+app.use(bodyParser.json())
 
 
 app.use('/', LyricRouter);
-
 (async () => {
   try {
-      await Crawler.crawlerIdiom();
+    //   await Crawler.crawlerIdiom2();
   } catch (e) {
     console.log(e);
   }

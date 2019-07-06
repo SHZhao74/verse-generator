@@ -16,7 +16,8 @@
   },
   "homepage": "https://github.com/SHZhao74/Verse-Generator#readme",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
+    "body-parser": "^1.19.0",
+    "crawler": "^1.2.1",
     "express": "^4.17.1",
     "js-levenshtein": "^1.1.6",
     "mongoose": "^5.6.0",
@@ -25,7 +26,6 @@
     "opencc": "^1.0.5",
     "pinyin": "^2.9.0",
     "pug": "^2.0.4",
-    "request": "^2.88.0",
     "request-promise-native": "^1.0.7"
   },
   "devDependencies": {

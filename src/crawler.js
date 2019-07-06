@@ -5,6 +5,7 @@
  */
 const request = require("request-promise-native");
 const cheerio = require("cheerio");
+const CrawlerNPM = require('crawler');
 const Util = require("./utli");
 const PinyinHelper = require("./pinyinHelper");
 const WordModel = require("../models/WordModel");
@@ -23,7 +24,7 @@ class Crawler {
     return cheerio.load(page);
   }
   static async crawlerIdiom() {
-    const generator = genNumberRange(1, 20);
+    const generator = genNumberRange(1, 100);
     const wordsPerCrawl = 10;
     const crawlAndAddWords = async () => {
       const urls = [];
@@ -38,29 +39,52 @@ class Crawler {
         const text = $(".title1").text();
         const word = PinyinHelper.parsePinyin(text);
         const result = await WordModel.addWord({ ...word, idiom: true, length:text.length });
-        // console.log(result);
+        console.log(text, result);
       }
       if (val === undefined) {
-        console.log("Job Done!");
+        console.log("Job Finish!");
         setTimeout(() =>clearInterval(taskID), 500);
       }
+      console.log('Job Done once')
     };
-    const taskID = setInterval(crawlAndAddWords, 2000);
+    const taskID = setInterval(crawlAndAddWords, 8000);
     // await crawlAndAddWords();
   }
-}
-const c = new Crawler({
-  maxConnections: 10,
-  callback: function(err, res, done) {
-    if (err) {
-      console.error(err);
-      throw err;
-    } else {
-      const $ = res.$;
-      const text = $(".title1").text();
-    }
+  static crawlerIdiom2() {
+    const generator = genNumberRange(1, 100);
+    const c = new CrawlerNPM({
+      // maxConnections: 10,
+      rateLimit: 1000,
+      callback: function(err, res, done) {
+        if (err) {
+          console.error(err);
+          throw err;
+        } else {
+          const $ = res.$;
+          const text = $(".title1").text();
+          const word = PinyinHelper.parsePinyin(text);
+
+          WordModel.addWord({
+            ...word,
+            idiom: true,
+            length: text.length
+          }).then(result => {
+            console.log(text, result);
+            done()
+          });
+        }
+      }
+    });
+    // for (let i = 0; i < 100 / 10; i++){
+      const urls = [];
+      for (let j = 0; j < 100; j++){
+        urls.push(`http://big5.chengyudaquan.org/cy0/${generator.next().value}.html`);
+      }
+      // console.log(i)
+      c.queue(urls);
+    // }
   }
-});
+}
 function* genNumberRange(start = 0, end = 9) {
   for (let i = start; i <= end; i++) {
     yield i;

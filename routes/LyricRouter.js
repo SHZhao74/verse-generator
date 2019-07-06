@@ -10,6 +10,9 @@ Router.get('/', async (req, res) => {
     console.error(e)
   }
 })
+Router.get('/add', (req, res) => {
+  return res.render('addWord')
+})
 Router.get('/api/search', async (req, res) => {
   const { txt } = req.query;
   try {
@@ -20,6 +23,18 @@ Router.get('/api/search', async (req, res) => {
   } catch (e) {
     res.status(400).send(e)
     console.error(e)
+  }
+})
+
+Router.post('/api/addWord', async (req, res) => {
+  const { txt } = req.body;
+  try {
+    console.log(req.body)
+    const result = await Util.addWordsToDB(txt);
+    res.render("ryhmeResult", { result });
+  } catch (e) {
+    res.status(400).send(e);
+    console.error(e);
   }
 })
 module.exports = Router;
