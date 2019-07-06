@@ -10,7 +10,7 @@ services:
       - AUTHOR=zsh
       # - NODE_ENV=production
       - PORT=80
-    command: 'npm install && npm run start'
+    command: 'cd /app && npm install && npm run start'
   mongo:  # 會自動從Docker Hub上自動獲取mongo這個鏡像
     image: mongo
     restart: always
@@ -36,7 +36,3 @@ services:
       # ME_CONFIG_MONGODB_ADMINUSERNAME: zsh
       # ME_CONFIG_MONGODB_ADMINPASSWORD: Nightmare5
       ME_CONFIG_OPTIONS_EDITORTHEME: blackboard
-
-volumes:
-  webdate: #/homes/j5201314peter/tronzo-web-build
-  dbPath: #/homes/j5201314peter/mongodb/data
