@@ -78,7 +78,7 @@ class Util {
   static parseLyric(lyric) {
     let words;
     if (typeof lyric === "string") {
-      words = lyric.replace(/[a-z|A-Z]/g, '');
+      words = lyric.replace(/[a-z|A-Z|0-9]/g, '');
       words = this.cutWord(words)
     } else words = [lyric.word]
     // words = words.map(word => Object({ word }))
@@ -132,4 +132,6 @@ class Util {
     return await WordModel.countDocuments({});
   }
 }
+
+
 module.exports = Util;

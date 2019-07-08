@@ -1,16 +1,17 @@
 version: '3.2'
 services:
   WEB:
-    image: nodejs:12-alpine
+    image: node:12-alpine
     ports: 
       - 32780:80
     volumes: 
       - /var/services/homes/j5201314peter/verse-generator:/app
     environment: 
       - AUTHOR=zsh
-      # - NODE_ENV=production
+      - NODE_ENV=production
       - PORT=80
-    command: 'cd /app && npm install && npm run start'
+    working_dir: /app
+    command: yarn start
   mongo:  # 會自動從Docker Hub上自動獲取mongo這個鏡像
     image: mongo
     restart: always

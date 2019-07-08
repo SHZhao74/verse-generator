@@ -7,25 +7,25 @@
 var app = require('../app');
 var debug = require('debug')('verse-generator:server');
 var http = require('http');
-// var Mongoose = require('mongoose')
+var Mongoose = require('mongoose')
 
 /**
  * Mongoose setup
  */
 // Mongoose.Promise = global.Promise;
-// let uri = ''
-// if (process.env.NODE_ENV === 'production') {
-//   uri = 'mongodb://localhost:27017/lottery';
-// }
-// else uri = 'mongodb://localhost:27017/lottery';
-// Mongoose.connection.openUri(uri, { useNewUrlParser: true });
-// Mongoose.connection
-//   .on('error', () => {
-//     console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
-//   })
-//   .once('open', () => {
-//     console.log('MongoDB Connected!');
-//   });
+let uri = ''
+if (process.env.NODE_ENV === 'production') {
+  uri = 'mongodb://mongo:27017/hiphop';
+}
+else uri = 'mongodb://localhost:27017/hiphop';
+Mongoose.connection.openUri(uri, { useNewUrlParser: true });
+Mongoose.connection
+  .on('error', () => {
+    console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
+  })
+  .once('open', () => {
+    console.log('MongoDB Connected!');
+  });
 /**
  * Get port from environment and store in Express.
  */

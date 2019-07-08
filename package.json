@@ -17,6 +17,7 @@
   "homepage": "https://github.com/SHZhao74/Verse-Generator#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
     "crawler": "^1.2.1",
     "express": "^4.17.1",
     "js-levenshtein": "^1.1.6",
