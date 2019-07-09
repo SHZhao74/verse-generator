@@ -1,5 +1,4 @@
 const nodejieba = require("nodejieba");
-const levenshtein = require("js-levenshtein");
 const OpenCC = require("opencc");
 const WordModel = require("../models/WordModel");
 const PinyinHelper = require("./pinyinHelper");
@@ -48,7 +47,8 @@ class Util {
    * @param {Word[]} words
    */
   static scoreRhyme(search, words) {
-    let { tone, consonant } = search;
+    let tone = [...search.tone],
+      consonant = [...search.consonant]
     tone = tone.reverse();
     consonant = consonant.reverse();
     words.forEach((word, index, arr) => {
@@ -56,8 +56,8 @@ class Util {
       const t = [...word.tone].reverse() //先copy再反轉
       const c = [...word.consonant].reverse()
       search.vowelType.forEach((w, i) => {
-        if (t[i] === tone[i] ) score+=1.5;  
-        if (c[i] === consonant[i] ) score++;        
+        if (t[i] === tone[i]) score += 1.5;
+        if (c[i] === consonant[i] ) score++;
       })
       word.score = score / (2.5 * search.word.length);
     })
