@@ -4,7 +4,7 @@ const OpenCC = require("opencc");
 const WordModel = require("../models/WordModel");
 const PinyinHelper = require("./pinyinHelper");
 const { RhymeDct } = require("./RhymeTable");
-
+const Config = require('../config');
 const opencc = new OpenCC("s2tw.json");
 // opencc.(OpenCC.COVERSERION_FAST);
 
@@ -21,7 +21,7 @@ class Util {
      * 雙韻找雙押：.0 .1, 三押： .1 .2 四：.2 .3
      * 三韻找三押: .0 .1 .2 四押: .1 .2 .3, 雙押: .1 .2-> .0 .1
      */
-    for (let i = 2; i <= 4; i++) {
+    for (let i = 2; i <= Config.MAX_MATCH_WORD_LENGTH; i++) {
       const q = { length: i };
       word.vowelType.forEach((vt, j) => {
         const index = j + (i - txt.length);
@@ -29,30 +29,40 @@ class Util {
       });
       query.push(q);
     }
-    //以下會產生出{vowelType.0: '9', vowelType.1: '3'}
-    // word.vowelType.forEach((vt, i) => {
-    //     query[`vowelType.${i}`] = vt
-    // })
     // console.log(query);
     try {
-      const result = await WordModel.find(
+      let result = await WordModel.find(
         { $or: query },
         { _id: false, __v: false, length: false }
       ).lean();
-      // console.table(result)
+      result = this.scoreRhyme(word, result);
+      console.table(result)
       return { word, result };
     } catch (e) {
       console.error(e);
     }
-    // console.table(global.words.map(ele => {
-    //     ele.pinD = levenshtein(word.pinyin, ele.pinyin);
-    //     ele.toneD = levenshtein(word.tone, ele.tone);
-    //     ele.vowelD = levenshtein(word.vowel, ele.vowel);
-    //     return ele;
-    // })
-    // )
   }
-
+  /**
+   * 根據搜尋字眼評斷押韻程度
+   * @param {Word} search
+   * @param {Word[]} words
+   */
+  static scoreRhyme(search, words) {
+    let { tone, consonant } = search;
+    tone = tone.reverse();
+    consonant = consonant.reverse();
+    words.forEach((word, index, arr) => {
+      let score = search.word.length;
+      const t = [...word.tone].reverse() //先copy再反轉
+      const c = [...word.consonant].reverse()
+      search.vowelType.forEach((w, i) => {
+        if (t[i] === tone[i] ) score+=1.5;  
+        if (c[i] === consonant[i] ) score++;        
+      })
+      word.score = score / (2.5 * search.word.length);
+    })
+    return words.sort((a, b) => b.score - a.score);
+  }
   /**
    * 新增一個或多個字彙進資料庫
    * @param {String} lyric
@@ -78,9 +88,9 @@ class Util {
   static parseLyric(lyric) {
     let words;
     if (typeof lyric === "string") {
-      words = lyric.replace(/[a-z|A-Z|0-9]/g, '');
-      words = this.cutWord(words)
-    } else words = [lyric.word]
+      words = lyric.replace(/[a-z|A-Z|0-9]/g, "");
+      words = this.cutWord(words);
+    } else words = [lyric.word];
     // words = words.map(word => Object({ word }))
     // console.log(words)
     words = words.map(w => {

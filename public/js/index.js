@@ -1,6 +1,8 @@
 $(document).ready(() => {
     $('#search').click(() => {
-        fetch(`/api/search?txt=${$('#txt').val()}`)
+        const txt = $('#txt').val();
+        if(txt)
+        fetch(`/api/search?txt=${txt}`)
             // .then(res => res.json()).then(json => {
             //     const cards = json.map(j => {
             //         const keys = Object.keys(j);

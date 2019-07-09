@@ -50,8 +50,8 @@ app.use("/", LyricRouter);
 (async () => {
   try {
     //   await Crawler.crawlerIdiom2();
-    const { result } = await Util.searchRhyme("宣揚");
-    console.table(result);
+    // const { result } = await Util.searchRhyme("宣揚");
+    // console.table(result);
   } catch (e) {
     console.log(e);
   }
