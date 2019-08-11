@@ -26,7 +26,8 @@
     "opencc": "^1.0.5",
     "pinyin": "^2.9.0",
     "pug": "^2.0.4",
-    "request-promise-native": "^1.0.7"
+    "request-promise-native": "^1.0.7",
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "morgan": "^1.9.1"
