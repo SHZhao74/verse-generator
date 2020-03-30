@@ -16,6 +16,8 @@ const RhymeTable = [
   {chinese: ['魚', '需'], rhyme:['ü']},
   {chinese: ['絕', '學'], rhyme:['üe']},
 ]
+
+//押韻歸類表
 const RhymeDct = {
     'a': '1', 'ua': '1', 'ia': '1',// ㄚ ㄧㄚ ㄨㄚ
     'ai': '2', 'uai': '2', // ㄞ ㄨㄞ

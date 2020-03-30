@@ -4,9 +4,17 @@ html(lang="zh-Hant-TW")
   head
     title 尬押
     meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="author" content="Zhao Shou-Hao")
+    meta(name="description" content="押韻詞彙搜尋引擎")
+
+    meta(itemprop="image" content="/img/logo2.png")
+    meta(property="og:description" content="押韻詞彙搜尋引擎")
     block meta
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+
+    <link rel="icon" href="/img/favicon.ico" />
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", crossorigin="anonymous")
+
+
     block css
       link(rel='stylesheet', href='/css/style.default.css')
       link(rel='stylesheet', href='/css/my.style.css')
@@ -16,17 +24,10 @@ html(lang="zh-Hant-TW")
           .container-fluid
             .navbar-holder.d-flex.align-items-center.justify-content-between
               .navbar-header
-                a.navbar-brand(href=`/img/logo1.png`)
-                  .brand-text.d-none.d-md-inline-block 
-                    strong 尬押
-
-              //- ul.nav-menu.list-unstyled.d-flex.flex-md-row.align-items-md-center
-              //-   li.nav-item
-              //-     a.nav-link(href=`/lottery/${orgId}` target="_blank")
-              //-         |預覽網站 
-              //-         i.far.fa-eye
+                a.navbar-brand(href='#') 
+                  img.d-inline-block(src=`/img/logo2.png` alt='logo' width="25" height="25")
+                  span 尬押
     block content
-
     block footer
     block script
       script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')

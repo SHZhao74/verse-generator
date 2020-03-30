@@ -1,19 +1,16 @@
 extends layout
 
 block content
-    //- section.section-padding
-    //-     .container
-    //-         h1.center  尬押
     section.section-padding
         .container
-            .d-flex.justify-content-center
-                img(src="/img/logo2.png", alt="Logo", srcset="")
+            .d-flex.justify-content-center(style="padding: 10px")
+                img(src="/img/logo2.png", alt="Logo", srcset="" width="100px")
             h3 
                 span 共
                 span=WordCnt
                 span 個詞彙
             .input-group
-                input( type="text" class="form-control" placeholder="韻腳" aria-label="Username" aria-describedby="basic-addon1")#txt
+                input( type="text" class="form-control" placeholder="輸入韻腳" aria-label="Username" aria-describedby="basic-addon1")#txt
                 .input-group-append
                     input(type="button", value="尬一下")#search.btn.btn-primary
     section.section-padding

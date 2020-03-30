@@ -38,11 +38,3 @@ Router.post('/api/addWord', async (req, res) => {
   }
 })
 module.exports = Router;
-
-(async () => {
-    // let r1 = await Util.addWordsToDB(sentence);
-    // await Util.rebuildDataBase();
-    // console.log('DONE', {r2})
-})().catch(e => {
-    console.error(e)
-});

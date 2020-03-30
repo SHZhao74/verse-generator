@@ -14,20 +14,11 @@ exports.searchRhyme = (req, res) => {
   // const word = iconv.decode(req.query.word, 'big5')
   console.log(word);
   const rhyme = getRhyme(word)
-  // console.log(rhyme);
   RhymeModel.findOne({rhyme}, (err, result) => {
     if (err) return console.error(err);
     if (result) res.send(result)
     else res.send([])
   })
-  // pyshell.run('src/main.py', {args:[req.query.word]}, (err, result) => {
-  //   if(err)console.error(err);
-  //   console.log(result);
-  //   fs.readFile(`../data/song0.json`, (err, data) => {
-  //     const words = JSON.parse(iconv.decode(data, 'big5'))
-  //
-  //   // res.send(result)
-  // })
 }
 const getRhyme = (word) => {
   const pinyin = Pinyin(word, {style: Pinyin.STYLE_NORMAL})
@@ -51,7 +42,6 @@ exports.addWord = function(req, res) {
   const new_lyric = new LyricModel({word: word});
   const new_rhyme = new RhymeModel({rhyme:rhyme, words:new_lyric})
   // 先找這組詞彙是否已經存在
-  console.log(word);
   new_rhyme.isWordExist(word, (err, result) => {
     if (err) return console.error(err);
     console.log('word findOne result:', result? result.rhyme : 'null')

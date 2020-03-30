@@ -10,3 +10,33 @@
     opacity: 1;
     background-color: #165435;
 } */
+.brand-text {
+    padding: 0 .2em;
+}
+.simple span {
+    border: .5px solid grey;
+    border-radius: 10% 15%;
+    padding: .3em;
+    margin: .2em;
+    transition-duration: .3s;
+    tr
+}
+.simple span:hover {
+    border: .5px solid #33b35a;
+    transform: translateY(-5px);
+}
+@media (max-width: 600px){
+    .table {
+        visibility: hidden;
+        display: none;
+    }
+    .section-padding {
+        padding: 10px;
+    }
+}
+@media (min-width: 600px){
+    .simple {
+        display: none;
+        visibility: hidden;
+    }
+}

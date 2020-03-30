@@ -10,7 +10,7 @@ const opencc = new OpenCC("s2tw.json");
 class Util {
   /**
    * 依給定的字彙搜尋押韻的詞彙
-   * @param {String} txt
+   * @param {String} txt 
    */
   static async searchRhyme(txt) {
     const word = Object.assign({ word: txt }, PinyinHelper.parsePinyin(txt));
@@ -35,7 +35,7 @@ class Util {
         { _id: false, __v: false, length: false }
       ).lean();
       result = this.scoreRhyme(word, result);
-      console.table(result)
+      // console.table(result)
       return { word, result };
     } catch (e) {
       console.error(e);
@@ -91,13 +91,10 @@ class Util {
       words = lyric.replace(/[a-z|A-Z|0-9]/g, "");
       words = this.cutWord(words);
     } else words = [lyric.word];
-    // words = words.map(word => Object({ word }))
-    // console.log(words)
     words = words.map(w => {
       const pinyins = PinyinHelper.parsePinyin(w);
       return Object.assign({ word: w }, pinyins, { length: w.length });
     });
-    // console.table(words);
     return words;
   }
 

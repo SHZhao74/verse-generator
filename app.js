@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-// import Lyric from './models/LyricModel'
 const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const path = require("path");
 const favicon = require("serve-favicon");
+const compression = require("compression");
 
 const Util = require("./src/utli");
 const LyricRouter = require("./routes/LyricRouter");
@@ -16,7 +16,8 @@ const port = process.env.PORT || 3000;
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
-app.use( favicon(path.join(__dirname, "public", "img", "favicon.ico")) );
+app.use(favicon(path.join(__dirname, "public", "img", "favicon.ico")));
+
 if (app.get("env") === "production") {
   console.log("==========PRODUCTION Mode==========");
   app.set("trust proxy", 1); // trust first proxy
@@ -46,15 +47,8 @@ if (app.get("env") === "production") {
   app.use(logger("dev"));
 }
 app.use(bodyParser.json());
+app.use(compression());
 
 app.use("/", LyricRouter);
-(async () => {
-  try {
-    //   await Crawler.crawlerIdiom2();
-    // const { result } = await Util.searchRhyme("宣揚");
-    // console.table(result);
-  } catch (e) {
-    console.log(e);
-  }
-})();
+
 module.exports = app;
