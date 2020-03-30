@@ -4,13 +4,14 @@ services:
     image: node:12-alpine
     ports: 
       - 32780:80
-      - 27017:27017
     volumes: 
       - /var/services/homes/j5201314peter/verse-generator:/app
     environment: 
       - AUTHOR=zsh
       - NODE_ENV=production
       - PORT=80
+    networks:
+      - mongodb
     working_dir: /app
     command: yarn start
   # mongo:  # 會自動從Docker Hub上自動獲取mongo這個鏡像
@@ -26,15 +27,20 @@ services:
       # MONGO_INITDB_ROOT_USERNAME: zsh
       # MONGO_INITDB_ROOT_PASSWORD: Nightmare5
       # MONGO_INITDB_DATABASE: tronzo
-  mongo-express:  # 會自動從Docker Hub上自動獲取mongo-express這個鏡像
-    image: mongo-express
-    restart: always
-    ports:
-      - 32774:8081  # 本地端口(可自定義):容器內默認端口(mongo-express設定爲8081)
-    depends_on: 
-      - mongo
-    environment:  # 這裏只能使用與上方MONGO_INITDB_ROOT_USERNAME相同的root賬號
-      ME_CONFIG_MONGODB_SERVER: mongo
+  #mongo-express:  # 會自動從Docker Hub上自動獲取mongo-express這個鏡像
+  #  image: mongo-express
+  #  restart: always
+ #   ports:
+ #     - 32774:8081  # 本地端口(可自定義):容器內默認端口(mongo-express設定爲8081)
+ #   depends_on: 
+ #     - mongo
+ #   environment:  # 這裏只能使用與上方MONGO_INITDB_ROOT_USERNAME相同的root賬號
+ #     ME_CONFIG_MONGODB_SERVER: mongo
       # ME_CONFIG_MONGODB_ADMINUSERNAME: zsh
       # ME_CONFIG_MONGODB_ADMINPASSWORD: Nightmare5
-      ME_CONFIG_OPTIONS_EDITORTHEME: blackboard
+  #    ME_CONFIG_OPTIONS_EDITORTHEME: blackboard
+
+networks:
+  mongodb:
+    external:
+      name: mongodb

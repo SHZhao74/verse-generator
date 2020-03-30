@@ -15,7 +15,7 @@ var Mongoose = require('mongoose')
 // Mongoose.Promise = global.Promise;
 let uri = ''
 if (process.env.NODE_ENV === 'production') {
-  uri = 'mongodb://mongo:27017/hiphop';
+  uri = 'mongodb://mongo1:27017/hiphop';
 }
 else uri = 'mongodb://localhost:27017/hiphop';
 Mongoose.connection.openUri(uri, { useNewUrlParser: true });
