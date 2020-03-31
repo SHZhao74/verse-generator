@@ -2,7 +2,7 @@
 ![](public/img/logo2.png)
 > Verse generator
 
-## Feature
+## Feature
 * Support mactching Chinese word rythm
 * Multiple words matching
 * Lyric website Crawler
