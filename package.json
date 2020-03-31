@@ -21,7 +21,7 @@
     "compression": "^1.7.4",
     "crawler": "^1.2.1",
     "express": "^4.17.1",
-    "mongoose": "^5.6.0",
+    "mongoose": "^5.7.5",
     "nodejieba": "^2.3.1",
     "nodemon": "^1.12.1",
     "opencc": "^1.0.5",
